@@ -1,5 +1,6 @@
 package com.qa.todo.persistence.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -21,7 +22,7 @@ public class ListEntity {
 	private String title;
 
 	@OneToMany(mappedBy = "list")
-	private Set<TaskEntity> tasks;
+	private Set<TaskEntity> tasks = new HashSet<>();
 
 	public ListEntity() {
 		super();

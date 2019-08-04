@@ -29,8 +29,8 @@ public class ListRepoIntegrationTest {
 		this.testEM.persist(list);
 		this.testEM.flush();
 		// when
-		System.out.println("LISTS: " + this.repo.findAll());
 		ListEntity found = this.repo.findById(list.getId()).get();
+
 		// then
 		assertThat(found).isEqualTo(list);
 	}
