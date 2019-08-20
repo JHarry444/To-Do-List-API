@@ -46,7 +46,7 @@ public class DtoMappingTest {
 		ListDto listDto = new ListDto(listEntity.getId(), listEntity.getTitle());
 		// when
 		ListEntity found = this.listRepo.findById(listEntity.getId()).get();
-		ListDto mapped = this.mapper.mapToDto(found, ListDto.class);
+		ListDto mapped = this.mapper.map(found, ListDto.class);
 		// then
 		assertThat(listDto).isEqualTo(mapped);
 	}
@@ -63,7 +63,7 @@ public class DtoMappingTest {
 		TaskDto taskDto = new TaskDto(taskEntity.getId(), taskEntity.getDescription(), taskEntity.isCompleted());
 		// when
 		TaskEntity found = this.taskRepo.findById(taskEntity.getId()).get();
-		TaskDto mapped = this.mapper.mapToDto(found, TaskDto.class);
+		TaskDto mapped = this.mapper.map(found, TaskDto.class);
 		// then
 		assertThat(taskDto).isEqualTo(mapped);
 	}

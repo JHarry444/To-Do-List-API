@@ -11,7 +11,7 @@ public class BaseMapper {
 		this.mapper = new DozerBeanMapper();
 	}
 
-	public <T> T mapToDto(Object source, Class<T> targetClass) {
+	public <T> T map(Object source, Class<T> targetClass) {
 		return this.mapper.map(source, targetClass);
 	}
 
