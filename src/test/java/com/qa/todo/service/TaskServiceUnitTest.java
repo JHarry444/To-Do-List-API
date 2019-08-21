@@ -76,12 +76,18 @@ public class TaskServiceUnitTest {
 	}
 
 	@Test
-	public void testUpdateTask() {
-		when(this.mapper.map(Task_DTO_1, TaskEntity.class)).thenReturn(Task_ENTITY_1);
+	public void testRemoveTask() {
+		final long ID = 1;
+		when(this.repo.existsById(ID)).thenReturn(false);
+
+		this.service.removeTask(ID);
+
+		verify(this.repo, times(1)).deleteById(ID);
+		verify(this.repo, times(1)).existsById(ID);
 	}
 
 	@Test
-	public void testRemoveTask() {
+	public void testUpdateTask() {
 		when(this.mapper.map(Task_DTO_1, TaskEntity.class)).thenReturn(this.Task_ENTITY_1);
 		when(this.repo.findById(Mockito.anyLong())).thenReturn(Optional.of(this.Task_ENTITY_2));
 		when(this.repo.save(this.Task_ENTITY_2)).thenReturn(this.Task_ENTITY_2);

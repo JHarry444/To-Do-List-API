@@ -71,12 +71,18 @@ public class ListServiceUnitTest {
 	}
 
 	@Test
-	public void testUpdateList() {
-		when(this.mapper.map(LIST_DTO_1, ListEntity.class)).thenReturn(LIST_ENTITY_1);
+	public void testRemoveList() {
+		final long ID = 1;
+		when(this.repo.existsById(ID)).thenReturn(false);
+
+		this.service.removeList(ID);
+
+		verify(this.repo, times(1)).deleteById(ID);
+		verify(this.repo, times(1)).existsById(ID);
 	}
 
 	@Test
-	public void testRemoveList() {
+	public void testUpdateList() {
 		when(this.mapper.map(LIST_DTO_1, ListEntity.class)).thenReturn(this.LIST_ENTITY_1);
 		when(this.repo.findById(Mockito.anyLong())).thenReturn(Optional.of(this.LIST_ENTITY_2));
 		when(this.repo.save(this.LIST_ENTITY_2)).thenReturn(this.LIST_ENTITY_2);

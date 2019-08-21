@@ -39,8 +39,9 @@ public class TaskService {
 		this.repo.save(entityToUpdate);
 	}
 
-	public void removeTask(Long id) {
+	public boolean removeTask(Long id) {
 		this.repo.deleteById(id);
+		return this.repo.existsById(id);
 	}
 
 }
