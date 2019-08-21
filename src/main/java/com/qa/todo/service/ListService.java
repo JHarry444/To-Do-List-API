@@ -36,6 +36,7 @@ public class ListService {
 		ListEntity entityToUpdate = this.repo.findById(id)
 				.orElseThrow(() -> new ListNotFoundException("Unable to find a list with an id of " + id));
 		entityToUpdate.setTitle(newListEntity.getTitle());
+		this.repo.save(entityToUpdate);
 		return this.mapper.mapToDto(entityToUpdate);
 	}
 

@@ -19,7 +19,7 @@ import com.qa.todo.dto.TaskDto;
 import com.qa.todo.persistence.domain.ListEntity;
 import com.qa.todo.persistence.domain.TaskEntity;
 import com.qa.todo.persistence.repo.TaskRepo;
-import com.qa.todo.util.BaseMapper;
+import com.qa.todo.util.TaskMapper;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -40,7 +40,7 @@ public class TaskServiceUnitTest {
 	private TaskRepo repo;
 
 	@Mock
-	private BaseMapper mapper;
+	private TaskMapper mapper;
 
 	@Test
 	public void testServiceNotNull() {
@@ -49,9 +49,7 @@ public class TaskServiceUnitTest {
 
 	@Test
 	public void testAddTask() {
-		TaskEntity expected = new TaskEntity(this.Task_ENTITY_1.getDescription(), this.Task_ENTITY_1.isCompleted(),
-				this.Task_ENTITY_1.getList());
-		when(this.mapper.map(Task_DTO_1, TaskEntity.class)).thenReturn(expected);
+		when(this.mapper.mapToEntity(Task_DTO_1)).thenReturn(Task_ENTITY_1);
 		TaskEntity expectedWithID = new TaskEntity(this.Task_ENTITY_1.getDescription(),
 				this.Task_ENTITY_1.isCompleted(), this.Task_ENTITY_1.getList());
 		expectedWithID.setId(1L);
@@ -60,19 +58,19 @@ public class TaskServiceUnitTest {
 		this.service.addTask(Task_DTO_1);
 
 		verify(this.repo, times(1)).save(this.Task_ENTITY_1);
-		verify(this.mapper, times(1)).map(Task_DTO_1, TaskEntity.class);
+		verify(this.mapper, times(1)).mapToEntity(Task_DTO_1);
 	}
 
 	@Test
 	public void testGetTask() {
 		when(this.repo.findById(Mockito.anyLong())).thenReturn(Optional.of(this.Task_ENTITY_1));
-		when(this.mapper.map(Task_ENTITY_1, TaskDto.class)).thenReturn(this.Task_DTO_1);
+		when(this.mapper.mapToDto(Task_ENTITY_1)).thenReturn(this.Task_DTO_1);
 
 		long id = 1;
 		this.service.getTask(id);
 
 		verify(this.repo, times(1)).findById(id);
-		verify(this.mapper, times(1)).map(Task_ENTITY_1, TaskDto.class);
+		verify(this.mapper, times(1)).mapToDto(Task_ENTITY_1);
 	}
 
 	@Test

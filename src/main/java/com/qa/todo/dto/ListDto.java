@@ -42,6 +42,11 @@ public class ListDto {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (tasks == null) {
+			if (other.tasks != null)
+				return false;
+		} else if (!tasks.equals(other.tasks))
+			return false;
 		if (title == null) {
 			if (other.title != null)
 				return false;
@@ -64,6 +69,11 @@ public class ListDto {
 
 	public void setTasks(Set<Long> tasks) {
 		this.tasks = tasks;
+	}
+
+	@Override
+	public String toString() {
+		return "ListDto [id=" + id + ", title=" + title + ", tasks=" + tasks + "]";
 	}
 
 }

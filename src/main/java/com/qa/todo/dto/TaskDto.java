@@ -54,4 +54,39 @@ public class TaskDto {
 		this.listId = listId;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TaskDto other = (TaskDto) obj;
+		if (completed != other.completed)
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (listId == null) {
+			if (other.listId != null)
+				return false;
+		} else if (!listId.equals(other.listId))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "TaskDto [id=" + id + ", description=" + description + ", completed=" + completed + ", listId=" + listId
+				+ "]";
+	}
+
 }

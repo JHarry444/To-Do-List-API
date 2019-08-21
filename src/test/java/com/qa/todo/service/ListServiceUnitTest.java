@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.qa.todo.dto.ListDto;
 import com.qa.todo.persistence.domain.ListEntity;
 import com.qa.todo.persistence.repo.ListRepo;
-import com.qa.todo.util.BaseMapper;
+import com.qa.todo.util.ListMapper;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -38,7 +38,7 @@ public class ListServiceUnitTest {
 	private ListRepo repo;
 
 	@Mock
-	private BaseMapper mapper;
+	private ListMapper mapper;
 
 	@Test
 	public void testServiceNotNull() {
@@ -62,13 +62,13 @@ public class ListServiceUnitTest {
 	@Test
 	public void testGetList() {
 		when(this.repo.findById(Mockito.anyLong())).thenReturn(Optional.of(this.LIST_ENTITY_1));
-		when(this.mapper.map(LIST_ENTITY_1, ListDto.class)).thenReturn(this.LIST_DTO_1);
+		when(this.mapper.mapToDto(LIST_ENTITY_1)).thenReturn(this.LIST_DTO_1);
 
 		long id = 1;
 		this.service.getList(id);
 
 		verify(this.repo, times(1)).findById(id);
-		verify(this.mapper, times(1)).map(LIST_ENTITY_1, ListDto.class);
+		verify(this.mapper, times(1)).mapToDto(LIST_ENTITY_1);
 	}
 
 	@Test
