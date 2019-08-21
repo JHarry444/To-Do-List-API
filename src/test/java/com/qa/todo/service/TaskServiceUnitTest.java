@@ -25,13 +25,13 @@ import com.qa.todo.util.BaseMapper;
 @RunWith(SpringRunner.class)
 public class TaskServiceUnitTest {
 
-	private final TaskDto Task_DTO_1 = new TaskDto(1L, "Build shed", false);
+	private final TaskDto Task_DTO_1 = new TaskDto(1L, "Build shed", false, null);
 
 	private final ListEntity LIST_ENTITY = new ListEntity("To do");
 
-	private final TaskEntity Task_ENTITY_1 = new TaskEntity("Build shed", false, this.LIST_ENTITY);
+	private final TaskEntity Task_ENTITY_1 = new TaskEntity(1L, "Build shed", false, this.LIST_ENTITY);
 
-	private final TaskEntity Task_ENTITY_2 = new TaskEntity("Bloop", false, this.LIST_ENTITY);
+	private final TaskEntity Task_ENTITY_2 = new TaskEntity(2L, "Bloop", false, this.LIST_ENTITY);
 
 	@InjectMocks
 	private TaskService service;
@@ -74,7 +74,6 @@ public class TaskServiceUnitTest {
 		verify(this.repo, times(1)).findById(id);
 		verify(this.mapper, times(1)).map(Task_ENTITY_1, TaskDto.class);
 	}
-	
 
 	@Test
 	public void testRemoveTask() {

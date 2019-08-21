@@ -1,7 +1,5 @@
 package com.qa.todo.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class TaskDto {
 
 	private Long id;
@@ -10,14 +8,14 @@ public class TaskDto {
 
 	private boolean completed;
 
-	@JsonIgnore
-	private ListDto list;
+	private Long listId;
 
-	public TaskDto(Long id, String description, boolean completed) {
+	public TaskDto(Long id, String description, boolean completed, Long listId) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.completed = completed;
+		this.listId = listId;
 	}
 
 	public TaskDto() {
@@ -48,12 +46,12 @@ public class TaskDto {
 		this.completed = completed;
 	}
 
-	public ListDto getList() {
-		return list;
+	public Long getListId() {
+		return listId;
 	}
 
-	public void setList(ListDto list) {
-		this.list = list;
+	public void setListId(Long listId) {
+		this.listId = listId;
 	}
 
 }

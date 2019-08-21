@@ -3,6 +3,7 @@ package com.qa.todo.persistence.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class ListEntity {
 	@Column(name = "title", nullable = false)
 	private String title;
 
-	@OneToMany(mappedBy = "list")
+	@OneToMany(mappedBy = "list", cascade = CascadeType.REMOVE)
 	private Set<TaskEntity> tasks = new HashSet<>();
 
 	public ListEntity() {
@@ -31,6 +32,11 @@ public class ListEntity {
 	public ListEntity(String title) {
 		super();
 		this.title = title;
+	}
+
+	public ListEntity(Long id) {
+		super();
+		this.id = id;
 	}
 
 	public Long getId() {

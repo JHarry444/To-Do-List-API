@@ -7,12 +7,13 @@ public class ListDto {
 
 	private String title = null;
 
-	private Set<TaskDto> tasks;
+	private Set<Long> tasks;
 
-	public ListDto(Long id, String title) {
+	public ListDto(Long id, String title, Set<Long> tasks) {
 		super();
 		this.id = id;
 		this.title = title;
+		this.setTasks(tasks);
 	}
 
 	public ListDto() {
@@ -57,11 +58,11 @@ public class ListDto {
 		this.title = title;
 	}
 
-	public Set<TaskDto> getTasks() {
+	public Set<Long> getTasks() {
 		return tasks;
 	}
 
-	public void setTasks(Set<TaskDto> tasks) {
+	public void setTasks(Set<Long> tasks) {
 		this.tasks = tasks;
 	}
 

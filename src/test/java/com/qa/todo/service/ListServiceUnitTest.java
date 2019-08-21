@@ -5,6 +5,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -24,7 +25,7 @@ import com.qa.todo.util.BaseMapper;
 @RunWith(SpringRunner.class)
 public class ListServiceUnitTest {
 
-	private final ListDto LIST_DTO_1 = new ListDto(1L, "To do");
+	private final ListDto LIST_DTO_1 = new ListDto(1L, "To do", Collections.emptySet());
 
 	private final ListEntity LIST_ENTITY_1 = new ListEntity("To do");
 

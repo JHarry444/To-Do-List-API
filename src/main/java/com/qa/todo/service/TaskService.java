@@ -6,29 +6,29 @@ import com.qa.todo.dto.TaskDto;
 import com.qa.todo.exception.TaskNotFoundException;
 import com.qa.todo.persistence.domain.TaskEntity;
 import com.qa.todo.persistence.repo.TaskRepo;
-import com.qa.todo.util.BaseMapper;
+import com.qa.todo.util.TaskMapper;
 
 @Service
 public class TaskService {
 
 	private TaskRepo repo;
 
-	private BaseMapper mapper;
+	private TaskMapper mapper;
 
-	public TaskService(TaskRepo repo, BaseMapper mapper) {
+	public TaskService(TaskRepo repo, TaskMapper mapper) {
 		this.repo = repo;
 		this.mapper = mapper;
 	}
 
-	public TaskDto addTask(TaskDto Task) {
-		TaskEntity created = this.repo.save(this.mapper.map(Task, TaskEntity.class));
-		return this.mapper.map(created, TaskDto.class);
+	public TaskDto addTask(TaskDto task) {
+		TaskEntity created = this.repo.save(this.mapper.mapToEntity(task));
+		return this.mapper.mapToDto(created);
 	}
 
 	public TaskDto getTask(Long id) {
 		TaskEntity TaskEntity = this.repo.findById(id)
 				.orElseThrow(() -> new TaskNotFoundException("Unable to find a Task with an id of " + id));
-		return this.mapper.map(TaskEntity, TaskDto.class);
+		return this.mapper.mapToDto(TaskEntity);
 	}
 
 	public TaskDto updateTask(TaskDto Task, Long id) {
@@ -37,7 +37,7 @@ public class TaskService {
 				.orElseThrow(() -> new TaskNotFoundException("Unable to find a Task with an id of " + id));
 		entityToUpdate.setCompleted(newTaskEntity.isCompleted());
 		entityToUpdate.setDescription(newTaskEntity.getDescription());
-		return this.mapper.map(this.repo.save(entityToUpdate), TaskDto.class);
+		return this.mapper.mapToDto(this.repo.save(entityToUpdate));
 	}
 
 	public boolean removeTask(Long id) {

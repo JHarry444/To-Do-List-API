@@ -2,6 +2,8 @@ package com.qa.todo.mapping;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collections;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,7 @@ public class DtoMappingTest {
 		ListEntity listEntity = new ListEntity("Testing");
 		this.testEM.persist(listEntity);
 		this.testEM.flush();
-		ListDto listDto = new ListDto(listEntity.getId(), listEntity.getTitle());
+		ListDto listDto = new ListDto(listEntity.getId(), listEntity.getTitle(), Collections.emptySet());
 		// when
 		ListEntity found = this.listRepo.findById(listEntity.getId()).get();
 		ListDto mapped = this.mapper.map(found, ListDto.class);
@@ -60,7 +62,8 @@ public class DtoMappingTest {
 		TaskEntity taskEntity = new TaskEntity("Write tests", false, listEntity);
 		this.testEM.persist(taskEntity);
 		this.testEM.flush();
-		TaskDto taskDto = new TaskDto(taskEntity.getId(), taskEntity.getDescription(), taskEntity.isCompleted());
+		TaskDto taskDto = new TaskDto(taskEntity.getId(), taskEntity.getDescription(), taskEntity.isCompleted(),
+				taskEntity.getList().getId());
 		// when
 		TaskEntity found = this.taskRepo.findById(taskEntity.getId()).get();
 		TaskDto mapped = this.mapper.map(found, TaskDto.class);
