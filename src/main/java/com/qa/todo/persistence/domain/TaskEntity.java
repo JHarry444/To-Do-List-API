@@ -13,11 +13,11 @@ import javax.persistence.ManyToOne;
 public class TaskEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "task_id")
 	private Long id;
 
-	@Column(name = "description")
+	@Column(name = "description", nullable = false)
 	private String description;
 
 	@Column(name = "completed")

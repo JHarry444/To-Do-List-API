@@ -74,6 +74,7 @@ public class TaskServiceUnitTest {
 		verify(this.repo, times(1)).findById(id);
 		verify(this.mapper, times(1)).map(Task_ENTITY_1, TaskDto.class);
 	}
+	
 
 	@Test
 	public void testRemoveTask() {

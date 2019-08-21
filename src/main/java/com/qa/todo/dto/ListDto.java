@@ -1,9 +1,13 @@
 package com.qa.todo.dto;
 
+import java.util.Set;
+
 public class ListDto {
 	private Long id;
 
 	private String title = null;
+
+	private Set<TaskDto> tasks;
 
 	public ListDto(Long id, String title) {
 		super();
@@ -51,6 +55,14 @@ public class ListDto {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Set<TaskDto> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<TaskDto> tasks) {
+		this.tasks = tasks;
 	}
 
 }

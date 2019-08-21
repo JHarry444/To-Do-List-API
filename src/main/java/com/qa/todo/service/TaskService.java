@@ -20,8 +20,9 @@ public class TaskService {
 		this.mapper = mapper;
 	}
 
-	public void addTask(TaskDto Task) {
-		this.repo.save(this.mapper.map(Task, TaskEntity.class));
+	public TaskDto addTask(TaskDto Task) {
+		TaskEntity created = this.repo.save(this.mapper.map(Task, TaskEntity.class));
+		return this.mapper.map(created, TaskDto.class);
 	}
 
 	public TaskDto getTask(Long id) {
@@ -30,13 +31,13 @@ public class TaskService {
 		return this.mapper.map(TaskEntity, TaskDto.class);
 	}
 
-	public void updateTask(TaskDto Task, Long id) {
+	public TaskDto updateTask(TaskDto Task, Long id) {
 		TaskEntity newTaskEntity = this.mapper.map(Task, TaskEntity.class);
 		TaskEntity entityToUpdate = this.repo.findById(id)
 				.orElseThrow(() -> new TaskNotFoundException("Unable to find a Task with an id of " + id));
 		entityToUpdate.setCompleted(newTaskEntity.isCompleted());
 		entityToUpdate.setDescription(newTaskEntity.getDescription());
-		this.repo.save(entityToUpdate);
+		return this.mapper.map(this.repo.save(entityToUpdate), TaskDto.class);
 	}
 
 	public boolean removeTask(Long id) {

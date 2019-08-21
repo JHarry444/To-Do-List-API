@@ -73,11 +73,12 @@ public class ListServiceUnitTest {
 	@Test
 	public void testRemoveList() {
 		final long ID = 1;
-		when(this.repo.existsById(ID)).thenReturn(false);
+		when(this.repo.findById(ID)).thenReturn(Optional.of(this.LIST_ENTITY_1));
 
 		this.service.removeList(ID);
 
-		verify(this.repo, times(1)).deleteById(ID);
+		verify(this.repo, times(1)).findById(ID);
+		verify(this.repo, times(1)).delete(this.LIST_ENTITY_1);
 		verify(this.repo, times(1)).existsById(ID);
 	}
 

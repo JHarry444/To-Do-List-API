@@ -14,11 +14,11 @@ import javax.persistence.OneToMany;
 public class ListEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "list_id")
 	private Long id;
 
-	@Column(name = "title")
+	@Column(name = "title", nullable = false)
 	private String title;
 
 	@OneToMany(mappedBy = "list")

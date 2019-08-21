@@ -1,5 +1,7 @@
 package com.qa.todo.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class TaskDto {
 
 	private Long id;
@@ -7,6 +9,9 @@ public class TaskDto {
 	private String description;
 
 	private boolean completed;
+
+	@JsonIgnore
+	private ListDto list;
 
 	public TaskDto(Long id, String description, boolean completed) {
 		super();
@@ -43,28 +48,12 @@ public class TaskDto {
 		this.completed = completed;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TaskDto other = (TaskDto) obj;
-		if (completed != other.completed)
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+	public ListDto getList() {
+		return list;
+	}
+
+	public void setList(ListDto list) {
+		this.list = list;
 	}
 
 }
