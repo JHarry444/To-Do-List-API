@@ -8,11 +8,14 @@ public class TaskDto {
 
 	private boolean completed;
 
-	public TaskDto(Long id, String description, boolean completed) {
+	private Long listId;
+
+	public TaskDto(Long id, String description, boolean completed, Long listId) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.completed = completed;
+		this.listId = listId;
 	}
 
 	public TaskDto() {
@@ -43,6 +46,14 @@ public class TaskDto {
 		this.completed = completed;
 	}
 
+	public Long getListId() {
+		return listId;
+	}
+
+	public void setListId(Long listId) {
+		this.listId = listId;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -64,7 +75,18 @@ public class TaskDto {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (listId == null) {
+			if (other.listId != null)
+				return false;
+		} else if (!listId.equals(other.listId))
+			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "TaskDto [id=" + id + ", description=" + description + ", completed=" + completed + ", listId=" + listId
+				+ "]";
 	}
 
 }

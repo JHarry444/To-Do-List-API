@@ -1,14 +1,19 @@
 package com.qa.todo.dto;
 
+import java.util.Set;
+
 public class ListDto {
 	private Long id;
 
 	private String title = null;
 
-	public ListDto(Long id, String title) {
+	private Set<Long> tasks;
+
+	public ListDto(Long id, String title, Set<Long> tasks) {
 		super();
 		this.id = id;
 		this.title = title;
+		this.setTasks(tasks);
 	}
 
 	public ListDto() {
@@ -37,6 +42,11 @@ public class ListDto {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (tasks == null) {
+			if (other.tasks != null)
+				return false;
+		} else if (!tasks.equals(other.tasks))
+			return false;
 		if (title == null) {
 			if (other.title != null)
 				return false;
@@ -51,6 +61,19 @@ public class ListDto {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Set<Long> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<Long> tasks) {
+		this.tasks = tasks;
+	}
+
+	@Override
+	public String toString() {
+		return "ListDto [id=" + id + ", title=" + title + ", tasks=" + tasks + "]";
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.qa.todo.persistence.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,22 +12,30 @@ import javax.persistence.ManyToOne;
 public class TaskEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "task_id")
 	private Long id;
 
-	@Column(name = "description")
+	@Column(name = "description", nullable = false)
 	private String description;
 
 	@Column(name = "completed")
 	private boolean completed;
 
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	@JoinColumn(name = "list_id", nullable = false)
 	private ListEntity list;
 
 	public TaskEntity() {
 		super();
+	}
+
+	public TaskEntity(Long id, String description, boolean completed, ListEntity list) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.completed = completed;
+		this.list = list;
 	}
 
 	public TaskEntity(String description, boolean completed, ListEntity list) {

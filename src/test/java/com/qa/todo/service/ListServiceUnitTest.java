@@ -5,6 +5,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -12,19 +13,17 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.qa.todo.dto.ListDto;
 import com.qa.todo.persistence.domain.ListEntity;
 import com.qa.todo.persistence.repo.ListRepo;
-import com.qa.todo.util.BaseMapper;
+import com.qa.todo.util.ListMapper;
 
-@SpringBootTest
 @RunWith(SpringRunner.class)
 public class ListServiceUnitTest {
 
-	private final ListDto LIST_DTO_1 = new ListDto(1L, "To do");
+	private final ListDto LIST_DTO_1 = new ListDto(1L, "To do", Collections.emptySet());
 
 	private final ListEntity LIST_ENTITY_1 = new ListEntity("To do");
 
@@ -37,7 +36,7 @@ public class ListServiceUnitTest {
 	private ListRepo repo;
 
 	@Mock
-	private BaseMapper mapper;
+	private ListMapper mapper;
 
 	@Test
 	public void testServiceNotNull() {
@@ -61,23 +60,24 @@ public class ListServiceUnitTest {
 	@Test
 	public void testGetList() {
 		when(this.repo.findById(Mockito.anyLong())).thenReturn(Optional.of(this.LIST_ENTITY_1));
-		when(this.mapper.map(LIST_ENTITY_1, ListDto.class)).thenReturn(this.LIST_DTO_1);
+		when(this.mapper.mapToDto(LIST_ENTITY_1)).thenReturn(this.LIST_DTO_1);
 
 		long id = 1;
 		this.service.getList(id);
 
 		verify(this.repo, times(1)).findById(id);
-		verify(this.mapper, times(1)).map(LIST_ENTITY_1, ListDto.class);
+		verify(this.mapper, times(1)).mapToDto(LIST_ENTITY_1);
 	}
 
 	@Test
 	public void testRemoveList() {
 		final long ID = 1;
-		when(this.repo.existsById(ID)).thenReturn(false);
+		when(this.repo.findById(ID)).thenReturn(Optional.of(this.LIST_ENTITY_1));
 
 		this.service.removeList(ID);
 
-		verify(this.repo, times(1)).deleteById(ID);
+		verify(this.repo, times(1)).findById(ID);
+		verify(this.repo, times(1)).delete(this.LIST_ENTITY_1);
 		verify(this.repo, times(1)).existsById(ID);
 	}
 
